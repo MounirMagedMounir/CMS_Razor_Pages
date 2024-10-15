@@ -1,0 +1,20 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+@if (Model.Alert is not null)
+{
+    <div class="alert alert-dismissible alert-danger">
+
+        <form method="post" asp-page-handler="DismissAlert">
+            <button type="submit" asp-page-handler="DismissAlert" class="btn-close" aria-label="Close"></button>
+		</form>  
+        <strong>@Model.Alert</strong>
+    </div>
+}
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    
+</div>

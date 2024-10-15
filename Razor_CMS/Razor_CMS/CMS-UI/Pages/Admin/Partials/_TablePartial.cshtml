@@ -1,0 +1,441 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table Example</title>
+
+    <!-- External Stylesheets -->
+    <link href="~/Table/vendors/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="~/Table/vendors/nprogress/nprogress.css" rel="stylesheet">
+    <link href="~/Table/vendors/iCheck/skins/flat/green.css" rel="stylesheet">
+
+    <style>
+  .bulk-action-container {
+    display: flex;
+    justify-content: flex-start; /* Aligns items to the start of the container */
+    margin-bottom: 1rem; /* Adjust as needed for spacing */
+    margin-left : -20%; /* Adjust as needed for alignment */
+
+}
+
+        .hidden {
+    display: none;
+}
+        /* Container for input fields to allow wrapping */
+        .input-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        /* Styling individual input fields */
+        .form-floating {
+            flex: 1 1 200px;
+            margin-bottom: 1rem;
+            max-width: 100%;
+            box-sizing: border-box;
+
+        }
+
+        /* Table header with sorting arrows */
+        .header-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header-text {
+            margin-right: 5px;
+        }
+
+        .Sort-Arrows {
+            font-size: 0.8em;
+            text-decoration: none;
+        }
+        /* Styling for the table and its elements */
+        .table {
+            width: 140%;
+            margin-left: -20%;
+            border-collapse: collapse;
+            border: 7px solid #000;
+            border-color: #202020;
+        }
+
+        .table th, .table td {
+            text-align: left;
+            padding: 8px;
+            border-left: 2px solid #6f42c1;
+            border-bottom: 5px solid #6f42c1;
+        }
+
+        .table img {
+            max-width: 100px;
+            height: auto;
+        }
+
+        /* Responsive table layout */
+        .media (max-width: 768px) {
+            .table th, .table td {
+                display: block;
+                width: 115%;
+            }
+
+            .table thead {
+                display: none;
+            }
+
+            .table tr {
+                display: block;
+                margin-bottom: 10px;
+            }
+
+            .table td {
+                text-align: right;
+                padding-left: 50%;
+                position: relative;
+            }
+
+            .table td::before {
+                content: attr(data-label);
+                position: absolute;
+                left: 0;
+                width: 45%;
+                padding-left: 10px;
+                font-weight: bold;
+            }
+        }
+
+        /* Pagination styles */
+        .pagination a {
+            text-decoration: none; /* Removes underline */
+            padding: 8px 16px;
+            margin: 0 4px;
+            color: #007bff; /* Set link color */
+
+        }
+
+            .pagination a:hover {
+                background-color: #e9ecef; /* Optional: Hover effect */
+                color: #0056b3;
+            }
+
+        .pagination .arrow {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+        }
+
+        .pagination .active {
+            background-color: #007bff;
+            color: white;
+            border-radius: 4px;
+        }
+
+        .pagination .arrow.prev {
+            margin-right: 8px;
+        }
+
+        .pagination .arrow.next {
+            margin-left: 8px;
+        }
+    </style>
+
+    @functions {
+        // Helper to retrieve property values of an object
+        public IDictionary<string, object> GetPropertyValues<T>(T obj)
+        {
+            var properties = typeof(T).GetProperties();
+            var dictionary = new Dictionary<string, object>();
+
+            foreach (var prop in properties)
+            {
+                dictionary[prop.Name.ToLower()] = prop.GetValue(obj);
+            }
+
+            return dictionary;
+        }
+
+        // Function to toggle sort order between asc and desc
+        public string GetsortOrder(string order)
+        {
+            return order == "asc" ? "desc" : "asc";
+        }
+
+        // Retrieves query parameter value or default
+        public string GetQueryParameter(string key, string defaultValue)
+        {
+            var value = HttpContextAccessor.HttpContext.Request.Query[key].ToString();
+            return !string.IsNullOrEmpty(value) ? value : defaultValue;
+        }
+
+        // Retrieves the current value for the filter query
+        public string GetFilterQuery(string header)
+        {
+            return HttpContextAccessor.HttpContext.Request.Query.ContainsKey(header)
+                ? HttpContextAccessor.HttpContext.Request.Query[header].ToString()
+                : string.Empty;
+        }
+    }
+    
+    <!-- jQuery -->
+    <script src="~/Table/vendors/jquery/dist/jquery.min.js"></script>
+
+    <script>
+        // Clears empty input fields before submitting the form
+        function cleanForm() {
+            const form = document.getElementById('filterForm');
+            const inputs = form.querySelectorAll('input[name]');
+            inputs.forEach(input => {
+                if (!input.value.trim()) {
+                    input.removeAttribute('name');
+                }
+            });
+        }
+         $(document).ready(function() {
+        // Function to check if any checkboxes are selected
+        function updateDeleteButtonVisibility() {
+            if ($('input[name="selectedIds"]:checked').length > 0) {
+                $('#delete-selected').removeClass('hidden');
+            } else {
+                $('#delete-selected').addClass('hidden');
+            }
+        }
+
+        // Check all checkboxes
+        $('#check-all').on('change', function() {
+            $('input[name="selectedIds"]').prop('checked', this.checked);
+            updateDeleteButtonVisibility();
+        });
+
+        // Check individual checkboxes
+        $('input[name="selectedIds"]').on('change', function() {
+            updateDeleteButtonVisibility();
+        });
+
+        // Initial check
+        updateDeleteButtonVisibility();
+    });
+        // Select/Deselect all checkboxes
+        $(document).ready(function () {
+            $('#check-all').on('click', function () {
+                $('input[name="selectedIds"]').prop('checked', this.checked);
+            });
+
+            $('#delete-selected').on('click', function () {
+                var selectedIds = $('input[name="selectedIds"]:checked').map(function () {
+                    return $(this).val();
+                }).get();
+
+
+                if (selectedIds.length > 0) {
+                    // Proceed with JSON stringification and form submission
+                    var selectedIdsJson = JSON.stringify(selectedIds);
+
+                    var hiddenInput = $('<input>', {
+                        type: 'hidden',
+                        name: 'selectedIdsJson',
+                        value: selectedIdsJson
+                    });
+
+                    $('#bulk-action-form').append(hiddenInput); $('#bulk-action-form').submit();
+                    $('#bulk-action-form').on('submit', function (event) {
+                        event.preventDefault(); // Prevent default submission to inspect data first
+
+                        var formData = $(this).serializeArray();
+                        this.submit();
+                    });
+                } else {
+                    alert('Please select at least one item to delete.');
+                }
+            });
+        });
+    </script>
+
+</head>
+<body>
+    @inject IHttpContextAccessor HttpContextAccessor
+
+    @{
+        var count = (int)ViewData["Count"];
+        var take = (int)ViewData["Take"];
+        var sortBy = (string)ViewData["sortBy"];
+        var sortOrder = (string)ViewData["sortOrder"];
+        var pageNumber = (int)ViewData["pageNumber"];
+        var totalPages = (int)Math.Ceiling((double)count / take);
+
+        var filterHeaders = ViewData["parameter"] as List<string>;
+
+          // Default to false
+        var showDeleteButton = false;
+      
+        bool hasFilterParams = filterHeaders.Any(header => HttpContextAccessor.HttpContext.Request.Query.Keys.Any(key => key.StartsWith(header, StringComparison.OrdinalIgnoreCase)));
+       
+        // Get all query parameters except the page number
+       
+        var queryParameters = HttpContextAccessor.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value.ToString());
+        // Get the current URL path without the query string
+        var baseUrl = HttpContextAccessor.HttpContext.Request.Path; 
+
+        // Utility method to build the query string while preserving existing parameters
+        string BuildQueryString(string newSortBy, string newSortOrder)
+        {
+            // Use a HashSet to avoid duplicate query parameter keys
+            var queryParams = new Dictionary<string, string>(StringComparer.OrdinalIgnoreCase)
+                {
+                { "pageNumber", pageNumber.ToString() },
+                { "take", take.ToString() },
+                { "sortBy", newSortBy },
+                { "sortOrder", newSortOrder }
+                };
+
+            // Preserve existing query parameters, but avoid duplicates
+            foreach (var key in HttpContextAccessor.HttpContext.Request.Query.Keys)
+            {
+                // Add existing parameters only if they are not already in the dictionary
+                if (!queryParams.ContainsKey(key))
+                {
+                    queryParams[key] = HttpContextAccessor.HttpContext.Request.Query[key];
+                }
+            }
+
+            // Reconstruct query string with encoded values
+            return "?" + string.Join("&", queryParams.Select(p => $"{Uri.EscapeDataString(p.Key)}={Uri.EscapeDataString(p.Value)}"));
+        }
+
+    }
+
+    <!-- Create Button -->
+    <button type="button" class="btn btn-outline-primary mb-4" onclick="window.location.href='@baseUrl/Create'">Create</button>
+
+    <!-- Filter Form -->
+    <div class="tab-content">
+    <form method="get" id="filterForm">
+
+        <div class="input-container">
+            @foreach (var header in ViewData["parameter"] as List<string>)
+            {
+                <div class="form-floating mb-4">
+                        <input name="@header" type="text" class="form-control" id="@header" placeholder="@header" value="@GetFilterQuery(header)">
+                    <label for="@header">@header</label>
+                </div>
+            }
+        </div>
+
+        <!-- Hidden Inputs for Pagination and Sorting -->
+        <input type="hidden" name="pageNumber" value="@GetQueryParameter("pageNumber", "1")">
+        <input type="hidden" name="Take" value="@GetQueryParameter("Take", "10")">
+        <input type="hidden" name="sortBy" value="@GetQueryParameter("sortBy", "name")">
+        <input type="hidden" name="sortOrder" value="@GetQueryParameter("sortOrder", "asc")">
+
+        <button type="submit" class="btn btn-outline-primary mb-4" onclick="cleanForm()">Filter</button>
+
+        @if (hasFilterParams)
+        {
+            <button type="button" class="btn btn-secondary mb-4" onclick="window.location.href='@baseUrl/Index'">&times;</button>
+        }
+
+    </form>
+    </div>
+
+    <!-- The Table and  Bulk Action Form for Delete-->
+    <div>
+        <form id="bulk-action-form" method="post" asp-page-handler="DeleteSelected">
+
+			<!-- Bulk Action Form for Delete  -->
+         <div class="bulk-action-container">
+
+              <button type="button" id="delete-selected" class="btn btn-danger mb-4 hidden">Delete Selected</button>
+
+         </div>
+
+        <!-- Table -->
+        <table class="table table-striped border-primary table-bordered jambo_table bulk_action">
+            <thead>
+                <tr class="headings">
+                    <th><input type="checkbox" id="check-all" class="flat"></th>
+                    @if (ViewData["Headers"] != null)
+                    {
+                        foreach (var header in ViewData["Headers"] as List<string>)
+                        {
+                            // Determine the new sort order
+                            var newSortOrder = (sortBy.Equals(header, StringComparison.OrdinalIgnoreCase) && sortOrder.Equals("asc", StringComparison.OrdinalIgnoreCase)) ? "desc" : "asc";
+
+                            // Build the query string for the sorting link
+                            var queryString = BuildQueryString(header, newSortOrder);
+
+                            <th class="column-title text-center">
+                                <div class="header-container">
+                                    <a href="@queryString" class="Sort-Arrows">
+                                        <span class="header-text">@header</span>
+                                        @Html.Raw((sortBy.Equals(header, StringComparison.OrdinalIgnoreCase) && sortOrder.Equals("asc", StringComparison.OrdinalIgnoreCase)) ? "&#9650;" : "&#9660;")
+                                    </a>
+                                </div>
+                            </th>
+                        }
+                    }
+                    <th class="column-title">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var entity in Model)
+                {
+                    var values = GetPropertyValues(entity);
+
+                    <tr class="even pointer">
+                        <td class="a-center">
+                            <input type="checkbox" class="flat" name="selectedIds" value="@values["id"]">
+                        </td>
+
+                        @foreach (var header in ViewData["Headers"] as List<string>)
+                        {
+                            <td data-label="@header">
+                                @if (header == "ProfileImage" && values.ContainsKey("profileimage"))
+                                {
+                                    <img src="@values["profileimage"]" alt="Profile Image">
+                                }
+                                else if (values.ContainsKey(header.ToLower()))
+                                {
+                                        var propertyValue = values[header.ToLower()];
+
+                                        // Check if the property is a list
+                                        if (propertyValue is IEnumerable<object> list && !(propertyValue is string))
+                                        {
+                                            // Iterate over each item in the list and display its string representation
+                                            foreach (var item in list)
+                                            {
+                                                <span>@item.ToString()</span>
+
+                                                <br />
+                                            }
+                                        }
+                                        else
+                                        {
+                                            @propertyValue.ToString()
+                                        }
+                                }
+                                else
+                                {
+                                    <span>N/A</span>
+                                }
+                            </td>
+                        }
+
+                        <td class="actions">
+                            <a href="@baseUrl/Edit/@values["id"]" class="btn btn-info">Edit</a>
+                            <a href="@baseUrl/Delete/@values["id"]" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+      
+    </form>
+	</div>
+
+
+    <!-- Pagination -->
+    <partial name="~/Pages/Admin/Partials/_PaginationPartial.cshtml" model="totalPages" />
+
+</body>
+</html>

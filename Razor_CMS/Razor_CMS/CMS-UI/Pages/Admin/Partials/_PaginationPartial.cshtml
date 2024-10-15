@@ -1,0 +1,48 @@
+﻿@inject IHttpContextAccessor HttpContextAccessor
+@{
+    var queryParameters = HttpContextAccessor.HttpContext.Request.Query.ToDictionary(q => q.Key, q => q.Value.ToString());
+    var pageNumber = (int)ViewData["pageNumber"];
+    // Get the current URL path without the query string
+    var baseUrl = HttpContextAccessor.HttpContext.Request.Path;
+   
+
+}
+<div class="pagination">
+    <h5>Page</h5>
+    @if (Model > 1)
+    {
+        <div>
+            <!-- Previous Page Button -->
+            @if (pageNumber > 1)
+            {
+                <a href="@($"{baseUrl}?{string.Join("&", queryParameters.Where(p => !string.Equals(p.Key, "pageNumber", StringComparison.OrdinalIgnoreCase)).Select(p => $"{p.Key}={p.Value}"))}&pageNumber={pageNumber - 1}")" class="arrow prev" aria-label="Previous">
+                    &#x2190; <!-- Left arrow -->
+                </a>
+            }
+
+            <!-- Page Numbers -->
+            @for (int i = 1; i <= Model; i++)
+            {
+                <a href="@($"{baseUrl}?{string.Join("&", queryParameters.Where(p => !string.Equals(p.Key, "pageNumber", StringComparison.OrdinalIgnoreCase)).Select(p => $"{p.Key}={p.Value}"))}&pageNumber={i}")" class="page-number @(i == pageNumber ? "active" : "")">
+                    @i
+                </a>
+            }
+
+            <!-- Next Page Button -->
+            @if (pageNumber < Model)
+            {
+                <a href="@($"{baseUrl}?{string.Join("&", queryParameters.Where(p => !string.Equals(p.Key, "pageNumber", StringComparison.OrdinalIgnoreCase)).Select(p => $"{p.Key}={p.Value}"))}&pageNumber={pageNumber + 1}")" class="arrow next" aria-label="Next">
+                    &#x2192; <!-- Right arrow -->
+                </a>
+            }
+        </div>
+    }
+
+    else
+    {
+        <!--if the table is empty or data in the table equals the max row per page-->
+        <a href="@($"{baseUrl}?{string.Join("&", queryParameters.Where(p => !string.Equals(p.Key, "pageNumber", StringComparison.OrdinalIgnoreCase)).Select(p => $"{p.Key}={p.Value}"))}&pageNumber=1")" class="page-number @(1 == pageNumber ? "active" : "")">
+            1
+        </a>
+    }
+</div>

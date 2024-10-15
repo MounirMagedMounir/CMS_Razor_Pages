@@ -1,0 +1,115 @@
+is_global = true
+build_property.TargetFramework = net8.0
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = true
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = 
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = CMS_UI
+build_property.RootNamespace = CMS_UI
+build_property.ProjectDir = C:\Users\Mounir\Documents\projects\Sync\C#\Razor_CMS\Razor_CMS\CMS-UI\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.RazorLangVersion = 8.0
+build_property.SupportLocalizedComponentNames = 
+build_property.GenerateRazorMetadataSourceChecksumAttributes = 
+build_property.MSBuildProjectDirectory = C:\Users\Mounir\Documents\projects\Sync\C#\Razor_CMS\Razor_CMS\CMS-UI
+build_property._RazorSourceGeneratorDebug = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Admin/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Admin/Partials/_FormPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cUGFydGlhbHNcX0Zvcm1QYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Admin/Partials/_PaginationPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cUGFydGlhbHNcX1BhZ2luYXRpb25QYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Admin/Partials/_TablePartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cUGFydGlhbHNcX1RhYmxlUGFydGlhbC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Admin/Permssions/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cUGVybXNzaW9uc1xJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Admin/Roles/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cUm9sZXNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Admin/Roles/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cUm9sZXNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Admin/Roles/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cUm9sZXNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Admin/Roles/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cUm9sZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Admin/Users/Create.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cVXNlcnNcQ3JlYXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Admin/Users/Delete.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cVXNlcnNcRGVsZXRlLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Admin/Users/Edit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cVXNlcnNcRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Admin/Users/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQWRtaW5cVXNlcnNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Authentication/EmailVerification.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cRW1haWxWZXJpZmljYXRpb24uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Authentication/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Authentication/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cUmVnaXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Authentication/SignOut.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcQXV0aGVudGljYXRpb25cU2lnbk91dC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Error.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRXJyb3IuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcSW5kZXguY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Privacy.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUHJpdmFjeS5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Shared/_ValidationScriptsPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9WYWxpZGF0aW9uU2NyaXB0c1BhcnRpYWwuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/_ViewImports.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdJbXBvcnRzLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/_ViewStart.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcX1ZpZXdTdGFydC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/Mounir/Documents/projects/Sync/C\#/Razor_CMS/Razor_CMS/CMS-UI/Pages/Shared/_Layout.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcU2hhcmVkXF9MYXlvdXQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = b-tdj7ulrtlg

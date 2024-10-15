@@ -1,0 +1,112 @@
+﻿@functions {
+	public IDictionary<string, object> GetPropertyValues<T>(T obj)
+	{
+		var properties = typeof(T).GetProperties();
+		var dictionary = new Dictionary<string, object>();
+
+		foreach (var prop in properties)
+		{
+			var value = prop.GetValue(obj);
+			dictionary[prop.Name.ToLower()] = value ?? string.Empty;
+		}
+
+		return dictionary;
+	}
+	public IDictionary<string, Type> GetPropertyTypes<T>(T obj)
+	{
+		var propertyTypes = new Dictionary<string, Type>();
+
+		// Get the type of the object
+		var type = typeof(T);
+
+		// Get all properties of the type
+		var properties = type.GetProperties();
+
+		foreach (var property in properties)
+		{
+			// Add the property name and its type to the dictionary
+			propertyTypes[property.Name.ToLower()] = property.PropertyType;
+		}
+
+		return propertyTypes;
+	}
+	public bool IsCollection(Type type)
+	{
+		return typeof(System.Collections.IEnumerable).IsAssignableFrom(type) && type != typeof(string);
+	}
+}
+
+<div class="tab-content">
+	<form method="post" asp-page-handler="OnPostAsync">
+		<div class="text-center mx-auto mb-4">
+			<h1>@Model.Title</h1>
+		</div>
+		@{var values = GetPropertyValues(Model.UserRequest);
+		var types = GetPropertyTypes(Model.UserRequest);
+		 }
+
+		@if (Model.UserRequest != null)
+		{
+
+			@foreach (var inputName in Model.InputName)
+			{
+				var valueType = types[inputName.ToLower()];
+				var value = values[inputName.ToLower()];
+
+				if (IsCollection(valueType))
+				{
+					
+					var list = value as System.Collections.IEnumerable;
+					if (list != null && list.Cast<object>().Any())
+					{
+						
+						foreach (var item in list)
+						{
+							<div class="form-floating mb-4">
+								<input name="@inputName" value="@item?.ToString()" type="text" class="form-control" id="@inputName" placeholder="@item.ToString()">
+								<label for="@inputName">@inputName</label>
+								@if (Model?.Responses.ContainsKey(inputName))
+								{
+									<span for="@inputName" class="text-danger">@Model?.Responses[inputName].ToString()</span>
+								}
+							</div>
+						}
+					}else{
+						
+						<div class="form-floating mb-4">
+						<input name="@inputName" value="" type="text" class="form-control" id="@inputName" placeholder="@inputName">
+								<label for="@inputName">@inputName</label>
+								@if (Model?.Responses.ContainsKey(inputName))
+								{
+									<span for="@inputName" class="text-danger">@Model?.Responses[inputName].ToString()</span>
+								}
+							</div>
+					}
+				}
+				else
+				{
+					
+					<div class="form-floating mb-4">
+						<input name="UserRequest.@inputName" value="@value?.ToString()" type="text" class="form-control" id="@inputName" placeholder="@inputName">
+						<label for="@inputName">@inputName</label>
+						@if (Model?.Responses.ContainsKey(inputName))
+						{
+							<span for="@inputName" class="text-danger">@Model?.Responses[inputName].ToString()</span>
+						}
+					</div>
+				}
+			}
+		}
+		
+
+		@if (Model.Buttons!= null)
+		{
+			foreach (var button in Model.Buttons)
+			{
+				<div class="d-flex justify-content-center">
+					<button type="submit" class="btn btn-primary btn-block mb-4">@button</button>
+				</div>
+			}
+		}
+	</form>
+</div>

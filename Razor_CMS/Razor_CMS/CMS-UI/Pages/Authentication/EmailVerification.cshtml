@@ -1,0 +1,46 @@
+﻿@page
+@model EmailVerificationModel
+@{
+}
+
+@if (Model.Alert is not null)
+{
+	<div class="alert alert-dismissible alert-danger">
+
+		<form method="post" asp-page-handler="DismissAlert">
+			<button type="submit" asp-page-handler="DismissAlert" class="btn-close" aria-label="Close"></button>
+		</form>
+		<strong>@Model.Alert</strong>
+	</div>
+}
+
+<div class="tab-content">
+
+	<form method="Post" class="mt-3" asp-page-handler="OnPost">
+		<div class="text-center mx-auto mb-4">
+			<h1>Email Verification</h1>
+		</div>
+
+		<!-- Verification Code input -->
+		<div class="form-floating  mb-4">
+			<div class="form-floating  mb-4">
+				<input asp-for="VerificationCode" type="text" class="form-control" id="VerificationCode" placeholder="Verification Code">
+				<label asp-for="VerificationCode" for="VerificationCode">Verification Code</label>
+
+				@if (Model.Responses.ContainsKey("VerificationCode"))
+				{
+					<span asp-validation-for='VerificationCode' class="text-danger"> @Model.Responses["VerificationCode"].ToString()</span>
+				}
+
+			</div>
+
+		</div>
+
+
+		<!-- Submit button -->
+		<div class="d-flex justify-content-center">
+			<button type="submit" data-mdb-button-init data-mdb-ripple-init class="btn btn-primary btn-block mb-4">Verifiy</button>
+
+		</div>
+	</form>
+</div>

@@ -1,0 +1,17 @@
+﻿@page
+@model LoginModel
+@{
+}
+
+@if (Model.Alert is not null)
+{
+	<div class="alert alert-dismissible alert-danger">
+
+		<form method="post" asp-page-handler="DismissAlert">
+			<button type="submit" asp-page-handler="DismissAlert" class="btn-close" aria-label="Close"></button>
+		</form>
+		<strong>@Model.Alert</strong>
+	</div>
+}
+
+<partial name="~/Pages/Admin/Partials/_FormPartial.cshtml" model="Model.Form" />
